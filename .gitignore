@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Odoo
+*.log
+*.sqlite3
+
+# Environnement virtuel
+venv/
+.env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
