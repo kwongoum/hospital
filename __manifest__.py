@@ -1,12 +1,22 @@
 {
     "name": "Hospital Management",
-    "version": "1.0",
+    "version": "1.0.0",
     "summary": "Hospital custom Modules",
     "author": "Avit Merlin W. Kongoum",
+    "license": "LGPL-3",
     "sequence": -100,
     "category": "Custom",
     "depends": ["base"],
-    "data": [],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/hospital_patient_views.xml",
+        "views/menu.xml",
+    ],
     "installable": True,
     "application": True,
+    "auto_install":False,
+    "assets":{
+     
+    },
+    
 }

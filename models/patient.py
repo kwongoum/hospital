@@ -1,1 +1,0 @@
-# docker exec -it odoo-web odoo -u hospital -d hospital-db

@@ -1,1 +1,1 @@
-docker exec -it odoo-web odoo -u hospital -d hospital-db
+fdocker exec -it odoo-web odoo -u hospital -d hospital-db

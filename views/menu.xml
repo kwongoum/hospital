@@ -1,0 +1,26 @@
+<odoo>
+ <menuitem id="menu_hospital_root"
+              name="Hospital"
+              sequence="10"/>
+
+    <menuitem id="menu_patient_root"
+              name="Patients"
+              parent="menu_hospital_root"
+              sequence="10"/>
+
+    <menuitem id="menu_patient"
+              name="Patients"
+              parent="menu_patient_root"
+              action="action_hospital_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_patient_kanban"
+              name="Patients Kanban"
+              parent="menu_patient_root"
+              action="action_hospital_patient_kanban"
+              sequence ="11"
+              />
+    
+    
+  
+</odoo>
