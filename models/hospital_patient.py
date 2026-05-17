@@ -11,7 +11,7 @@ class HospitalPatient(models.Model):
     name = fields.Char(string="Name", required=True)
     age = fields.Integer(string="Age")
     birthdate = fields.Date(string="Birthdate")
-
+    active = fields.Boolean(string="Active", default=True)
     birthdate_fr = fields.Char(string="Birthdate FR", compute="_compute_birthdate_fr")
 
     @api.depends("birthdate")

@@ -10,6 +10,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/hospital_patient_views.xml",
+        "views/hospital_patient_female_views.xml",
         "views/menu.xml",
     ],
     "images": ["static/description/icon.png"],
