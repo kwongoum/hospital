@@ -1,21 +1,31 @@
 # docker exec -it odoo-web odoo -u hospital -d hospital-db
-
-from odoo import fields
-from odoo import models
+from datetime import datetime
+from odoo import api, fields, models
 
 
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
     _description = "Hospital Patient"
 
+
     name = fields.Char(string="Name", required=True)
     age = fields.Integer(string="Age")
-    birthdate = fields.Date(format="%d-%m-%Y", string="Birthdate")
+    birthdate = fields.Date(string="Birthdate")
+
+    birthdate_fr = fields.Char(string="Birthdate FR", compute="_compute_birthdate_fr")
+
+    @api.depends("birthdate")
+    def _compute_birthdate_fr(self):
+        for rec in self:
+            if rec.birthdate:
+                rec.birthdate_fr = rec.birthdate.strftime("%d/%m/%Y")
+            else:
+                rec.birthdate_fr = ""
+
     gender = fields.Selection(
-        fields.Selection(
-            [fields.Selection("male", "Male"), fields.Selection("female", "Female")]
-        )
+        selection=[("male", "Male"), ("female", "Female")], string="Gender"
     )
+
     email = fields.Char(string="Email")
     phone = fields.Char(string="Phone")
     address = fields.Text(string="Address")
@@ -23,8 +33,7 @@ class HospitalPatient(models.Model):
     is_urgent = fields.Boolean(string="Is Urgent Case")
     admission_date = fields.Datetime(string="Admission Date")
     discharge_date = fields.Datetime(string="Discharge Date")
-#   """   doctor_id = fields.Many2one("hospital.doctor", string="Doctor")
-#     department_id = fields.Many2one("hospital.department", string="Department") """
+
     medical_history = fields.Text(string="Medical History")
     notes = fields.Text(string="Notes")
     state = fields.Selection(

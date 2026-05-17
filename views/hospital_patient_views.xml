@@ -1,13 +1,42 @@
 <odoo>
 
+
+    <record id="view_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Patients">
+                <field name="name" />
+                <separator />
+                <filter string="Male" name="patient_male"
+                    domain="[('gender', '=', 'male')]" />
+                <filter string="Female" name="patient_female"
+                    domain="[('gender', '=', 'female')]" />
+                <separator />
+                <filter string="Child" name="patient_child" domain="[('age','&lt;', 7)]"
+                />
+
+                <group expand="1" string="Group By">
+                    <filter string="Gender" name='group_by_gender'
+                        context="{'group_by':'gender'}" />
+                    <filter string="Age" name='group_by_age'
+                        context="{'group_by':'age'}" />
+
+                </group>
+            </search>
+        </field>
+    </record>
+
+
     <record id="view_hospital_patient_tree" model="ir.ui.view">
         <field name="name">hospital.patient.tree</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <tree string="Patient Tree">
-                <field name="name"/>
-                <field name="age"/>
-                <field name="birthdate"/>
+                <field name="name" />
+                <field name="age" />
+                <field name="birthdate" />
+                <field name="gender"></field>
             </tree>
         </field>
     </record>
@@ -19,10 +48,19 @@
         <field name="arch" type="xml">
             <form string="Patient Form">
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="age"/>
-                        <field name="birthdate"/>
+                    <group col="2">
+                        <group col="1">
+                            <field name="name" />
+                            <field name="age" />
+                        </group>
+
+                        <group col="1">
+                            <field name="birthdate" />
+                            <field name="birthdate_fr" />
+                            <field name="gender" />
+                        </group>
+
+
                     </group>
                 </sheet>
             </form>
@@ -34,12 +72,20 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
         <field name="view_mode">tree,kanban,form</field>
-     </record>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first patient!
+            </p>
+        </field>
+
+
+    </record>
 
     <record id="action_hospital_patient_kanban" model="ir.actions.act_window">
         <field name="name">Patients_kanban_ac</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
+
         <field name="view_mode">kanban,tree,form</field>
     </record>
 

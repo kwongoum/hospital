@@ -1,5 +1,4 @@
-from odoo import models
-from odoo import fields
+from odoo import fields, models
 
 
 class HospitalDoctor(models.Model):
@@ -7,3 +6,6 @@ class HospitalDoctor(models.Model):
     _description = "Hospital Doctor"
 
     name = fields.Char(string="Name", required=True)
+
+    specialities = fields.Many2many("hospital.speciality", string="Specialities")
+    email = fields.Char(string="Email")

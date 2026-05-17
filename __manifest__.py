@@ -12,11 +12,9 @@
         "views/hospital_patient_views.xml",
         "views/menu.xml",
     ],
+    "images": ["static/description/icon.png"],
     "installable": True,
     "application": True,
-    "auto_install":False,
-    "assets":{
-     
-    },
-    
-}
+    "auto_install": False,
+    "assets": {},
+}  # type: ignore
