@@ -1,7 +1,6 @@
 <odoo>
 
-
-    <record id="view_hospital_patient_search" model="ir.ui.view">
+    <record id="view_hospital_patient_female_search" model="ir.ui.view">
         <field name="name">hospital.patient.search</field>
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
@@ -33,14 +32,11 @@
     <record id="view_hospital_patient_female_tree" model="ir.ui.view">
         <field name="name">hospital.patient.female.tree</field>
         <field name="model">hospital.patient</field>
+        <field name="inherit_id" ref="view_hospital_patient_tree" />
         <field name="arch" type="xml">
-            <tree string="Patient Tree">
-                <field name="name" />
+            <xpath expr="//field[@name='active']" position="after">
                 <field name="age" />
-                <field name="birthdate" />
-                <field name="gender" />
-                <field name="active" />
-            </tree>
+            </xpath>
         </field>
     </record>
 
@@ -48,25 +44,16 @@
     <record id="view_hospital_patient_female_form" model="ir.ui.view">
         <field name="name">hospital.patient.female.form</field>
         <field name="model">hospital.patient</field>
+        <field name="inherit_id" ref="view_hospital_patient_form" />
+
         <field name="arch" type="xml">
-            <form string="Patient Form">
-                <sheet>
-                    <group col="2">
-                        <group col="1">
-                            <field name="name" />
-                            <field name="age" />
-                        </group>
 
-                        <group col="1">
-                            <field name="birthdate" />
-                            <field name="birthdate_fr" />
-                            <field name="gender" />
-                            <field name="active" visible="0" />
-                        </group>
 
-                    </group>
-                </sheet>
-            </form>
+            <xpath expr="//field[@name='gender']" position="after">
+                <field name="age" />
+            </xpath>
+
+
         </field>
     </record>
 
@@ -74,13 +61,21 @@
         <field name="name">Patients female</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hospital_patient_female_tree" />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create your first patient female !
             </p>
         </field>
         <field name="domain"> [('gender','=','female')]</field>
+        <field name="context"> {
+            'default_gender':'female',
+            'default_age': 25
+            }</field>
+
+
+        <field name="search_view_id" ref="view_hospital_patient_female_search" />
     </record>
 
 

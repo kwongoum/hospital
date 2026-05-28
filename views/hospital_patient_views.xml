@@ -23,8 +23,11 @@
                         context="{'group_by':'gender'}" />
                     <filter string="Age" name='group_by_age'
                         context="{'group_by':'age'}" />
-
                 </group>
+                <!-- <searchpanel view_types="list,kanban">
+                    <field name="doctor_id" enable_count="1" select="multi" />
+
+                </searchpanel> -->
             </search>
         </field>
     </record>
@@ -37,9 +40,11 @@
             <tree string="Patient Tree">
                 <field name="name" />
                 <field name="age" />
-                <field name="birthdate" />
-                <field name="gender"></field>
+                <field name="address" />
+                <field name="gender" />
+
                 <field name="active" />
+
             </tree>
         </field>
     </record>
@@ -48,25 +53,24 @@
     <record id="view_hospital_patient_form" model="ir.ui.view">
         <field name="name">hospital.patient.form</field>
         <field name="model">hospital.patient</field>
+
         <field name="arch" type="xml">
             <form string="Patient Form">
                 <sheet>
-                    <group col="2">
-                        <group col="1">
-                            <field name="name" />
-                            <field name="age" />
-                        </group>
-
-                        <group col="1">
-                            <field name="birthdate" />
-                            <field name="birthdate_fr" />
-                            <field name="gender" />
-                            <field name="active" visible="0" />
-                        </group>
-
-
+                    <group>
+                        <field name="name" />
+                        <field name="birthdate" />
+                        <field name="address" />
+                        <field name="gender" />
+                        <field name="active" />
                     </group>
                 </sheet>
+                <!-- CHATTTER -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                    <field name="activity_ids" widget="mail_activity" />
+                </div>
             </form>
         </field>
     </record>
@@ -75,22 +79,30 @@
         <field name="name">Patients list_ac</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hospital_patient_tree" />
+
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create your first patient!
             </p>
         </field>
+        <field name="context">
+            {
+            'search_default_patient_male':1,
+            'search_default_group_by_gender': 1
+            }
+        </field>
 
-
+        <field name="search_view_id" ref="view_hospital_patient_search" />
     </record>
 
     <record id="action_hospital_patient_kanban" model="ir.actions.act_window">
         <field name="name">Patients_kanban_ac</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
-
         <field name="view_mode">kanban,tree,form</field>
+
     </record>
 
 </odoo>

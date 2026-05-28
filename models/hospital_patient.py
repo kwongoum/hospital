@@ -1,4 +1,3 @@
-# docker exec -it odoo-web odoo -u hospital -d hospital-db
 from datetime import datetime
 from odoo import api, fields, models
 
@@ -6,30 +5,22 @@ from odoo import api, fields, models
 class HospitalPatient(models.Model):
     _name = "hospital.patient"
     _description = "Hospital Patient"
+    _inherit =["mail.thread", "mail.activity.mixin"]
 
-
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(string="Name",  tracking=True, required=True)
     age = fields.Integer(string="Age")
     birthdate = fields.Date(string="Birthdate")
     active = fields.Boolean(string="Active", default=True)
-    birthdate_fr = fields.Char(string="Birthdate FR", compute="_compute_birthdate_fr")
-
-    @api.depends("birthdate")
-    def _compute_birthdate_fr(self):
-        for rec in self:
-            if rec.birthdate:
-                rec.birthdate_fr = rec.birthdate.strftime("%d/%m/%Y")
-            else:
-                rec.birthdate_fr = ""
-
+  
     gender = fields.Selection(
-        selection=[("male", "Male"), ("female", "Female")], string="Gender"
+        selection=[("male", "Male"), ("female", "Female")], 
+        string="Gender", tracking=True
     )
-
+ 
     email = fields.Char(string="Email")
     phone = fields.Char(string="Phone")
     address = fields.Text(string="Address")
-    image = fields.Binary(String="Image")
+    
     is_urgent = fields.Boolean(string="Is Urgent Case")
     admission_date = fields.Datetime(string="Admission Date")
     discharge_date = fields.Datetime(string="Discharge Date")
