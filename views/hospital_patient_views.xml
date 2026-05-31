@@ -8,8 +8,6 @@
             <search string="Patients">
                 <field name="name" />
                 <separator />
-                <filter string="Male" name="patient_male"
-                    domain="[('gender', '=', 'male')]" />
                 <filter string="Female" name="patient_female"
                     domain="[('gender', '=', 'female')]" />
                 <separator />
@@ -24,10 +22,10 @@
                     <filter string="Age" name='group_by_age'
                         context="{'group_by':'age'}" />
                 </group>
-                <!-- <searchpanel view_types="list,kanban">
-                    <field name="doctor_id" enable_count="1" select="multi" />
-
-                </searchpanel> -->
+                <searchpanel>
+                    <field name="gender" string="Gender" enable_counters="1" icon="fa-users"
+                        select="multi" />
+                </searchpanel>
             </search>
         </field>
     </record>
@@ -79,7 +77,7 @@
         <field name="name">Patients list_ac</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.patient</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">tree,form,kanban</field>
         <field name="view_id" ref="view_hospital_patient_tree" />
 
         <field name="help" type="html">

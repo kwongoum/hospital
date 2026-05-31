@@ -21,12 +21,12 @@
       action="action_hospital_patient"
       sequence="10" />
 
-   <menuitem id="menu_patient_female"
+   <!--    <menuitem id="menu_patient_female"
       name="Patients Female"
       parent="menu_patient_root"
       action="action_hospital_patient_female"
       sequence="11"
-   />
+   /> -->
 
    <menuitem id="menu_patient_kanban"
       name="Patients Kanban"

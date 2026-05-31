@@ -1,34 +1,6 @@
 <odoo>
 
-    <record id="view_hospital_patient_female_search" model="ir.ui.view">
-        <field name="name">hospital.patient.search</field>
-        <field name="model">hospital.patient</field>
-        <field name="arch" type="xml">
-            <search string="Patients">
-                <field name="name" />
-                <separator />
-                <filter string="Male" name="patient_male"
-                    domain="[('gender', '=', 'male')]" />
-                <filter string="Female" name="patient_female"
-                    domain="[('gender', '=', 'female')]" />
-                <separator />
-                <filter string="Child" name="patient_child" domain="[('age','&lt;', 7)]"
-                />
-                <filter name="archived"
-                    string="Archived"
-                    domain="[('active', '=', False)]" />
-                <group expand="1" string="Group By">
-                    <filter string="Gender" name='group_by_gender'
-                        context="{'group_by':'gender'}" />
-                    <filter string="Age" name='group_by_age'
-                        context="{'group_by':'age'}" />
-
-                </group>
-            </search>
-        </field>
-    </record>
-
-
+    <!-- 
     <record id="view_hospital_patient_female_tree" model="ir.ui.view">
         <field name="name">hospital.patient.female.tree</field>
         <field name="model">hospital.patient</field>
@@ -75,8 +47,7 @@
             }</field>
 
 
-        <field name="search_view_id" ref="view_hospital_patient_female_search" />
-    </record>
+    </record> -->
 
 
 </odoo>
