@@ -1,0 +1,64 @@
+<odoo>
+
+    <record id="view_hospital_appointment_tree" model="ir.ui.view">
+        <field name="name">hospital.appointment.tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <tree string="Appointment Tree">
+                <field name="patient_id" />
+                <field name="description" />
+
+                <field name="active" />
+
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="view_hospital_appointment_form" model="ir.ui.view">
+        <field name="name">hospital.appointment.form</field>
+        <field name="model">hospital.appointment</field>
+
+        <field name="arch" type="xml">
+            <form string="Appointment Form">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_id" />
+                            <field name="description" />
+                            <field name="active" />
+                        </group>
+                        <group>
+                            <field name="appointment_date" />
+                            <field name="booking_date" />
+
+                        </group>
+
+                    </group>
+                </sheet>
+                <!-- CHATTTER -->
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                    <field name="activity_ids" widget="mail_activity" />
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_hospital_appointments" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_id" ref="view_hospital_appointment_tree" />
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first appointment!
+            </p>
+        </field>
+    </record>
+
+</odoo>

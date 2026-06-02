@@ -25,7 +25,7 @@ class HospitalPatient(models.Model):
     admission_date = fields.Datetime(string="Admission Date")
     discharge_date = fields.Datetime(string="Discharge Date")
 
-    medical_history = fields.Text(string="Medical History")
+    ref = fields.Text(string="Reference")
     notes = fields.Text(string="Notes")
     state = fields.Selection(
         selection=[

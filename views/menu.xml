@@ -35,5 +35,10 @@
       sequence="12"
    />
 
+   <menuitem id="menu_appointment_root"
+      name="Appointments"
+      parent="menu_hospital_root"
+      action="action_hospital_appointments"
+      sequence="13" />
 
 </odoo>
