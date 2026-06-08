@@ -40,7 +40,7 @@
                 <field name="age" />
                 <field name="address" />
                 <field name="gender" />
-
+                <field name="ref_patient" />
                 <field name="active" />
 
             </tree>
@@ -56,12 +56,19 @@
             <form string="Patient Form">
                 <sheet>
                     <group>
-                        <field name="name" />
-                        <field name="birthdate" />
-                        <field name="address" />
-                        <field name="gender" />
-                        <field name="active" />
+                        <group>
+                            <field name="name" />
+                            <field name="date_of_birth" />
+                            <field name="age" />
+                            <field name="ref_patient" />
+                        </group>
+                        <group>
+                            <field name="gender" />
+                            <field name="address" />
+                            <field name="active" />
+                        </group>
                     </group>
+
                 </sheet>
                 <!-- CHATTTER -->
                 <div class="oe_chatter">
