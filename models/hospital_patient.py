@@ -36,7 +36,6 @@ class HospitalPatient(models.Model):
     phone = fields.Char(string="Phone")
     address = fields.Text(string="Address", default=" Rue ...")
     
-    is_urgent = fields.Boolean(string="Is Urgent Case")
     admission_date = fields.Datetime(string="Admission Date")
     discharge_date = fields.Datetime(string="Discharge Date")
 

@@ -17,6 +17,10 @@ class HospitalAppointment(models.Model):
     
     ref_appointment = fields.Char(string="Reference Appointment", compute="_compute_ref_appointment", store=True)
     prescription = fields.Html(string="Prescription")
+    priority= fields.Selection(
+        selection=[ ("0", "None"),("1", "Low"), ("2", "Medium"), ("3", "High")],
+        string="Priority"
+    )
     
     @api.depends("patient_id")
     def _compute_ref_appointment(self):

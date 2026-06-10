@@ -4,6 +4,7 @@
         <field name="name">hospital.appointment.tree</field>
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
+            <!-- <tree string="Appointment Tree" delete="0"> -->
             <tree string="Appointment Tree">
                 <field name="patient_id" />
                 <field name="description" />
@@ -21,9 +22,21 @@
         <field name="model">hospital.appointment</field>
 
         <field name="arch" type="xml">
+            <!-- <form string="Appointment Form" edit="0" delete="0"> -->
             <form string="Appointment Form">
                 <sheet>
+                    <div>
+                        <group>
+                            <h1>
+                                <field name="priority" widget="priority" />
+                            </h1>
+
+                        </group>
+
+
+                    </div>
                     <group>
+
                         <group>
                             <field name="patient_id" />
 
