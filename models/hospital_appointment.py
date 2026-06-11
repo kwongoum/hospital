@@ -21,7 +21,37 @@ class HospitalAppointment(models.Model):
         selection=[ ("0", "None"),("1", "Low"), ("2", "Medium"), ("3", "High")],
         string="Priority"
     )
+    state = fields.Selection(
+        selection=[("draft","Draft"), ("in_consultation","In Consultation"), ("done","Done"),("cancelled","Cancelled")],
+        string="Status", default="draft" )
     
+    def action_open_patient(self):
+        self.ensure_one()
+        return {
+        'type': 'ir.actions.act_window',
+        'res_model': 'hospital.patient',
+        'res_id': self.patient_id.id,
+        'view_mode': 'form',
+        'target': 'new',  # ouvre en popup
+        'context': {'form_view_initial_mode': 'view', 'readonly': True}
+    }
+        
+    def  action_reset_to_draft(self):
+        for rec in self:
+            rec.state = 'draft'    
+    
+    def action_in_consultation(self):
+        for rec in self:
+            rec.state = 'in_consultation'
+            
+    def action_done(self):
+        for rec in self:
+            rec.state = 'done'
+    
+    def action_cancel(self):
+        for rec in self:
+            print("Cancelling appointment..........................................")
+            rec.state = 'cancelled'
     @api.depends("patient_id")
     def _compute_ref_appointment(self):
         for record in self:
@@ -35,7 +65,7 @@ class HospitalAppointment(models.Model):
         for record in self:
             if record.patient_id:
                 record.description= f"Appointment for {record.patient_id.name}"
-               
+                record.state = "draft"
                 # record.ref = f"REF-{record.patient_id.name[:3].upper()}-{record.id}"
             else:
                 record.description = "standard checkup"
