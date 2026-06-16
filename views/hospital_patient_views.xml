@@ -55,6 +55,7 @@
         <field name="arch" type="xml">
             <form string="Patient Form">
                 <sheet>
+
                     <group>
                         <group>
                             <field name="name" />
@@ -65,7 +66,7 @@
                         <group>
                             <field name="gender" />
                             <field name="address" />
-                            <field name="active" />
+                            <field name="active" help="Inactive patients will not appear in lists" />
                         </group>
                     </group>
 

@@ -5,12 +5,28 @@
         <field name="model">hospital.appointment</field>
         <field name="arch" type="xml">
             <!-- <tree string="Appointment Tree" delete="0"> -->
-            <tree string="Appointment Tree">
+            <tree string="Appointment Tree"
+                decoration-danger="state =='cancelled'"
+                decoration-success="state=='done'"
+                decoration-warning="state =='in_consultation'"
+                decoration-info="state=='draft'"
+            >
                 <field name="patient_id" />
                 <field name="description" />
-                <field name="gender" />
+                <field name="gender" widget="badge" />
+                <field name="initial_doctor_id" widget="many2one_avatar_user" />
+                <field name="state" widget="badge"
+                    decoration-danger="state == 'cancelled'"
+                    decoration-success="state == 'done'"
+                    decoration-warning="state =='in_consultation'"
+                    decoration-info="state=='draft'"
+                />
+                <field name="activity_ids" widget="list_activity" optional="show" />
                 <field name="ref_appointment" />
-                <field name="active" />
+                <field name="active" optional="show" />
+                <field name="priority" widget="priority" optional="hide" />
+                <field name="booking_date" optional="hide" />
+
 
             </tree>
         </field>
@@ -25,7 +41,11 @@
             <!-- <form string="Appointment Form" edit="0" delete="0"> -->
             <form string="Appointment Form">
                 <header>
+                    <button name="create_doctor_user" type="object" string="Create Doctor User"
+                        class="btn-primary"
+                    />
                     <button name="action_reset_to_draft" type="object" string="Reset"
+                        help="reset the appointment to draft state"
                         class="btn-secondary"
                     />
 
@@ -46,7 +66,7 @@
                 <sheet>
                     <div>
                         <group>
-                            <field name="priority" widget="priority" />
+                            <field name="priority" />
 
                         </group>
 
@@ -65,11 +85,11 @@
 
                             <field name="booking_date" />
                             <field name="appointment_date" />
-
+                            <field name="initial_doctor_id" />
                         </group>
+
                         <group>
                             <field name="ref_appointment" />
-
                             <field name="active" />
                         </group>
                     </group>
@@ -82,7 +102,9 @@
                         </page>
 
                         <page string="Prescription" name="prescription">
-                            <field name="prescription" placeholder="Enter prescription details..." />
+                            <field name="prescription" placeholder="Enter prescription details..."
+                                options="{'collaborative':True, 'resizable':True }"
+                            />
                         </page>
                         <page string="Pharmacy" name="pharmacy">
 

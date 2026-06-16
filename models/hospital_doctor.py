@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class HospitalDoctor(models.Model):
@@ -9,3 +9,5 @@ class HospitalDoctor(models.Model):
 
     specialities = fields.Many2many("hospital.speciality", string="Specialities")
     email = fields.Char(string="Email")
+    
+   
