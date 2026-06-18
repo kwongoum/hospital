@@ -10,6 +10,7 @@
                 decoration-success="state=='done'"
                 decoration-warning="state =='in_consultation'"
                 decoration-info="state=='draft'"
+                multi_edit="1"
             >
                 <field name="patient_id" />
                 <field name="description" />
@@ -47,17 +48,21 @@
                     <button name="action_reset_to_draft" type="object" string="Reset"
                         help="reset the appointment to draft state"
                         class="btn-secondary"
+                        attrs="{'invisible':[('state','in',['draft','in_consultation'])]}"
+                        data-hotkey="r"
                     />
 
                     <button name="action_in_consultation" type="object" string="In Consultation"
-                        attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"
-                        class="btn-warning" />
+                        attrs="{'invisible':[('state', 'in', ['in_consultation','done', 'cancelled'])]}"
+                        class="btn-warning" data-hotkey="i" />
                     <button name="action_done" type="object" string="Done" class="btn-primary"
-                        attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"
+                        attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
+                        data-hotkey="d"
                     />
                     <button name="action_cancel" type="object" string="Cancel" class="btn-secondary"
-                        attrs="{'invisible': [('state', 'in', ['done', 'cancelled'])]}"
+                        attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
                         confirm="Are you sure you want to cancel this appointment?"
+                        data-hotkey="l"
                     />
 
 
@@ -66,7 +71,7 @@
                 <sheet>
                     <div>
                         <group>
-                            <field name="priority" />
+                            <field name="priority" widget="priority" />
 
                         </group>
 
@@ -74,7 +79,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="patient_id" />
+                            <field name="patient_id" default_focus="1" />
                             <field name="gender" />
                             <button name="action_open_patient" type="object"
                                 string="patient details"
