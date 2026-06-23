@@ -21,6 +21,13 @@
       action="action_hospital_patient"
       sequence="10" />
 
+   <menuitem id="menu_configuration_root"
+      name="Configuration"
+      parent="menu_hospital_root"
+      action="action_hospital_patient_tag"
+      sequence="20" />
+
+
    <!--    <menuitem id="menu_patient_female"
       name="Patients Female"
       parent="menu_patient_root"

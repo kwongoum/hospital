@@ -73,6 +73,7 @@
                         <group>
                             <field name="priority" widget="priority" />
 
+
                         </group>
 
 
@@ -87,7 +88,7 @@
 
                         </group>
                         <group>
-
+                            <field name="hide_price" groups="base.group_no_one" />
                             <field name="booking_date" />
                             <field name="appointment_date" />
                             <field name="initial_doctor_id" />
@@ -96,6 +97,7 @@
                         <group>
                             <field name="ref_appointment" />
                             <field name="active" />
+
                         </group>
                     </group>
                     <notebook>
@@ -112,6 +114,31 @@
                             />
                         </page>
                         <page string="Pharmacy" name="pharmacy">
+                            <field name="appointment_medicine_line_ids">
+                                <tree string="Medicine Lines" editable="bottom">
+                                    <field name="medicine_id" />
+                                    <field name="price_unit"
+                                        attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
+                                    />
+                                    <field name="quantity" />
+                                    <field name="price_subtotal"
+                                        attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
+                                    />
+                                </tree>
+                                <form string="Medicine Line Form">
+                                    <group>
+                                        <field name="medicine_id" />
+                                        <field name="price_unit"
+                                            attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
+                                        />
+                                        <field name="quantity" />
+                                        <field name="price_subtotal"
+                                            attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
+                                        />
+
+                                    </group>
+                                </form>
+                            </field>
 
                         </page>
 

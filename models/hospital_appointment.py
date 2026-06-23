@@ -29,7 +29,9 @@ class HospitalAppointment(models.Model):
         selection=[("draft","Draft"), ("in_consultation","In Consultation"), ("done","Done"),("cancelled","Cancelled")],
         string="Status", default="draft" )
     
-            
+    appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', string ="Medicine Lines")
+    hide_price = fields.Boolean(string="Hide Price")
+  
      # Compute methods        
     @api.depends("patient_id")
     def _compute_ref_appointment(self):

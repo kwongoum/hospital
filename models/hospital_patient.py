@@ -18,7 +18,6 @@ class HospitalPatient(models.Model):
 
     age = fields.Integer(string="Age", compute = "_compute_age", store= True, 
                          help="age is computed based on the date of birth")
-
                 
     active = fields.Boolean(string="Active", default=True)
 
@@ -45,9 +44,13 @@ class HospitalPatient(models.Model):
         default="draft",
         string="Status",
     )
-
-
-    # Compute methods
+    image_1920= fields.Image("Image patient", max_width=1020, max_height=1920)
+    is_covered =fields.Boolean(string="Is Covered by Insurance", default=False)
+    tag_ids = fields.Many2many(comodel_name="hospital.patient.tag",string="Tags",  help="Select tags for the patient", 
+                               ondelete='restrict'
+                               )
+    
+      # Compute methods
     @api.depends("date_of_birth")
     def _compute_age(self):
         for record in self:
