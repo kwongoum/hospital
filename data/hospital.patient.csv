@@ -1,0 +1,5 @@
+id,name,address,gender,active,date_of_birth
+patient_6,Lucas Bernard,Mons,male,True,1993-02-14
+patient_7,Nicolas Dubois,Arlon,male,True,1987-10-08
+patient_8,Claire Lambert,Tournai,female,True,1996-05-22
+patient_9,Sophie Dupont,Hasselt,female,True,1991-12-03

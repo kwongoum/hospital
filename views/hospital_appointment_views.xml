@@ -1,5 +1,28 @@
 <odoo>
 
+    <record id="view_hospital_appointment_activity" model="ir.ui.view">
+        <field name="name">hospital.appointment.activity</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <activity string=" Appointment Activity">
+                <field name="patient_id" />
+                <field name="ref_appointment" />
+                <templates>
+                    <div t-name="activity-box">
+                        <img
+                            t-att-src="activity_image('hospital.patient', 'image_128', record.patient_id.raw_value)"
+                            role="img" t-att-title="record.patient_id.value"
+                        />
+                        <div>
+                            <field name="patient_id" /> : <field name="ref_appointment" />
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+
     <record id="view_hospital_appointment_tree" model="ir.ui.view">
         <field name="name">hospital.appointment.tree</field>
         <field name="model">hospital.appointment</field>
@@ -52,6 +75,13 @@
                         data-hotkey="r"
                     />
 
+                    <button name="%(action_sale_order_hospital)d" type="action"
+                        string="Create Sale Order"
+                        help="Create a sale order for this appointment"
+                        class="btn-primary"
+                        attrs="{'invisible':[('state','in',['draft','in_consultation'])]}"
+                    />
+
                     <button name="action_in_consultation" type="object" string="In Consultation"
                         attrs="{'invisible':[('state', 'in', ['in_consultation','done', 'cancelled'])]}"
                         class="btn-warning" data-hotkey="i" />
@@ -59,11 +89,17 @@
                         attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
                         data-hotkey="d"
                     />
-                    <button name="action_cancel" type="object" string="Cancel" class="btn-secondary"
-                        attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
-                        confirm="Are you sure you want to cancel this appointment?"
-                        data-hotkey="l"
+                    <button name="action_cancel" type="object" string="Cancel"
+                        class="btn-secondary"
                     />
+
+
+                    <!-- <button name="%(action_appointment_cancel_wizard)d" type="action"
+                        string="Cancel" class="btn-secondary"
+                        attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
+                        data-hotkey="l"
+                        context="{'default_appointment_id': active_id}"
+                    /> -->
 
 
                     <field name="state" widget="statusbar" />
@@ -110,7 +146,7 @@
 
                         <page string="Prescription" name="prescription">
                             <field name="prescription" placeholder="Enter prescription details..."
-                                options="{'collaborative':True, 'resizable':True }"
+                                options="{'collaborative':True, 'resizable':True,  'codeview':true}"
                             />
                         </page>
                         <page string="Pharmacy" name="pharmacy">
@@ -159,7 +195,7 @@
         <field name="name">Appointments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.appointment</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
         <field name="view_id" ref="view_hospital_appointment_tree" />
 
         <field name="help" type="html">

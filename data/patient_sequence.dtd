@@ -1,0 +1,5 @@
+<!ELEMENT record (field+)>
+<!ATTLIST record id NMTOKEN #REQUIRED>
+<!ATTLIST record model NMTOKEN #REQUIRED>
+<!ELEMENT field (#PCDATA)>
+<!ATTLIST field name NMTOKEN #REQUIRED>

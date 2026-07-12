@@ -1,12 +1,17 @@
-
+from odoo.tools import html2plaintext
+from odoo.exceptions import ValidationError
+import logging
 from odoo import api, fields, models
+_logger = logging.getLogger(__name__)
 
 class HospitalAppointment(models.Model):
 
     _name = "hospital.appointment"
     _description = "Hospital Appointment"
     _inherit =["mail.thread", "mail.activity.mixin"]
-
+    _rec_name="ref_appointment"
+   
+    
      # fields definitions
 
     patient_id = fields.Many2one(comodel_name="hospital.patient", string="Patient")
@@ -16,7 +21,7 @@ class HospitalAppointment(models.Model):
     active = fields.Boolean(string="Active", default=True)
     appointment_date = fields.Datetime(string="Appointment Date", default= fields.Datetime.now) 
     
-    booking_date = fields.Date(string="Booking Date",  default=lambda self: fields.Date.context_today(self))
+    booking_date = fields.Date(string="Booking Date",  default=fields.Date.context_today)
     gender = fields.Selection(related="patient_id.gender", string="Gender")
     
     ref_appointment = fields.Char(string="Reference Appointment", compute="_compute_ref_appointment", store=True)
@@ -32,7 +37,21 @@ class HospitalAppointment(models.Model):
     appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', string ="Medicine Lines")
     hide_price = fields.Boolean(string="Hide Price")
   
+  
+     #override methods
+    def write(self, vals):
+        if vals.get('state') == 'done':
+            for appointment in self:
+                prescription_text= html2plaintext(appointment.prescription or "").strip()
+                if not prescription_text:
+               
+                    raise ValidationError(
+                    "You cannot mark the appointment as done without a prescription."
+                )
+        return super(HospitalAppointment, self).write(vals)
+     
      # Compute methods        
+    
     @api.depends("patient_id")
     def _compute_ref_appointment(self):
         for record in self:
@@ -96,15 +115,21 @@ class HospitalAppointment(models.Model):
                 'sticky': False,
                  'next': {'type': 'ir.actions.act_window_close'},  # Refresh the form to show the key
             }
-      
         }
     
-    def action_cancel(self):
-        for rec in self:
-            print("Cancelling appointment..........................................")
-            rec.state = 'cancelled'
+    # def action_cancel(self):
+    #     for rec in self:
+    #         print("Cancelling appointment..........................................")
+    #         rec.state = 'cancelled'
 
-  
+    def action_cancel(self):
+        _logger.info("self = %s", self)
+        _logger.info("self.env = %s", self.env)
+        _logger.info( "action = %s",self.env.ref("hospital.action_appointment_cancel_wizard"))
+        action= self.env.ref('hospital.action_appointment_cancel_wizard').read()[0]
+        return action 
+
+        
     def create_doctor_user(self):
         self.ensure_one()
         group_doctor = self.env.ref('base.group_user')  # exemple groupe

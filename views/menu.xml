@@ -20,13 +20,22 @@
       parent="menu_patient_root"
       action="action_hospital_patient"
       sequence="10" />
-
+   <!-- apply menuitem hierarchy  -->
    <menuitem id="menu_configuration_root"
-      name="Configuration"
+      name="Configurations"
       parent="menu_hospital_root"
-      action="action_hospital_patient_tag"
-      sequence="20" />
+      sequence="20">
+      <menuitem
+         id="menu_configuration1"
+         name="Configuration Tags"
+         action="action_hospital_patient_tag"
+         sequence="10" />
+      <menuitem id="menu_configuration2"
+         name="Configuration 2"
+         action="action_hospital_patient_tag"
+         sequence="20" />
 
+   </menuitem>
 
    <!--    <menuitem id="menu_patient_female"
       name="Patients Female"
@@ -39,13 +48,26 @@
       name="Patients Kanban"
       parent="menu_patient_root"
       action="action_hospital_patient_kanban"
-      sequence="12"
+      sequence="20"
    />
 
+
    <menuitem id="menu_appointment_root"
-      name="Appointments"
+      name="Appointment Management"
       parent="menu_hospital_root"
+      sequence="30" />
+
+
+   <menuitem id="menu_appointment_list"
+      name="Appointments list"
+      parent="menu_appointment_root"
       action="action_hospital_appointments"
-      sequence="13" />
+      sequence="10" />
+
+   <menuitem id="menu_appointment_cancellation"
+      name="Cancellation"
+      parent="menu_appointment_root"
+      action="action_appointment_cancel_wizard"
+      sequence="20" />
 
 </odoo>

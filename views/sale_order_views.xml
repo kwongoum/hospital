@@ -1,0 +1,37 @@
+<odoo>
+    <record id="view_order_form_inherit_hospital" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.hospital</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock" />
+        <field name="arch" type="xml">
+
+
+            <!-- Ajouter les champs dans la section "customer" -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+
+                <field name="patient_id" />
+                <field name="confirmed_user_id" />
+            </xpath>
+            <!-- Ajouter appointment_id après commitment_date -->
+            <xpath expr="//field[@name='commitment_date']" position="after">
+                <field name="appointment_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_sale_order_hospital" model="ir.actions.act_window">
+        <field name="name">Hospital Sales Orders</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="view_id" ref="view_order_form_inherit_hospital" /> -->
+    </record>
+
+    <!-- MENU CHILD -->
+    <menuitem id="menu_hospital_sales"
+        name="Sales Orders"
+        parent="menu_hospital_root"
+        action="action_sale_order_hospital"
+        sequence="10" />
+
+</odoo>
