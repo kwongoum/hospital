@@ -22,6 +22,20 @@
         </field>
     </record>
 
+    <record id="view_hospital_appointment_calendar" model="ir.ui.view">
+        <field name="name">hospital.appointment.calendar</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <calendar string="Appointments" date_start="appointment_date" mode="month"
+                color="patient_id"
+                hide_time="true" quick_add="false" event_open_popup="true" event_limit="3">
+                <field name="state" invisible="1" />
+                <field name="patient_id" avatar_field="image_1920" filters="1" />
+                <field name="doctor_id" />
+
+            </calendar>
+        </field>
+    </record>
 
     <record id="view_hospital_appointment_tree" model="ir.ui.view">
         <field name="name">hospital.appointment.tree</field>
@@ -35,23 +49,45 @@
                 decoration-info="state=='draft'"
                 multi_edit="1"
             >
+                <header>
+                    <button name="action_done"
+                        type="object"
+                        string="Done" />
+                </header>
                 <field name="patient_id" />
                 <field name="description" />
                 <field name="gender" widget="badge" />
-                <field name="initial_doctor_id" widget="many2one_avatar_user" />
+
+                <field name="appointment_date" />
+                <field name="doctor_id" widget="many2one_avatar_user" />
                 <field name="state" widget="badge"
                     decoration-danger="state == 'cancelled'"
                     decoration-success="state == 'done'"
                     decoration-warning="state =='in_consultation'"
                     decoration-info="state=='draft'"
                 />
+                <field name="progress" widget="progressbar" />
+                <button name="action_done" type="object" icon="fa-check"
+                    class="btn-success"
+                    attrs="{'invisible':[('state', '!=', 'in_consultation')]}"
+                />
+                <button name="action_cancel" type="object" icon="fa-times"
+                    class="btn-danger"
+                    attrs="{'invisible':[('state', 'not in', [ 'draft', 'in_consultation'])]}"
+                />
+
+
                 <field name="activity_ids" widget="list_activity" optional="show" />
                 <field name="ref_appointment" />
                 <field name="active" optional="show" />
                 <field name="priority" widget="priority" optional="hide" />
                 <field name="booking_date" optional="hide" />
+                <groupby name="patient_id">
+                    <button name="action_view" type="object" string="View Patient"
+                        class="oe_highlight" />
+                    <button name="edit" type="edit" string="Edit Patient" class="oe_highlight" />
 
-
+                </groupby>
             </tree>
         </field>
     </record>
@@ -75,7 +111,7 @@
                         data-hotkey="r"
                     />
 
-                    <button name="%(action_sale_order_hospital)d" type="action"
+                    <button name="%(hospital.action_sale_order_hospital)d" type="action"
                         string="Create Sale Order"
                         help="Create a sale order for this appointment"
                         class="btn-primary"
@@ -108,16 +144,17 @@
                     <div>
                         <group>
                             <field name="priority" widget="priority" />
-
-
                         </group>
-
-
                     </div>
+
                     <group>
                         <group>
-                            <field name="patient_id" default_focus="1" />
+                            <field name="patient_id" default_focus="1"
+                                attrs="{'readonly': [('state', '!=', 'draft')]}" widget="selection" />
                             <field name="gender" />
+
+                            <field name="ref_patient_sequence" readonly="1" force_save="1" />
+
                             <button name="action_open_patient" type="object"
                                 string="patient details"
                                 class="btn-info" />
@@ -127,16 +164,22 @@
                             <field name="hide_price" groups="base.group_no_one" />
                             <field name="booking_date" />
                             <field name="appointment_date" />
-                            <field name="initial_doctor_id" />
+                            <field name="doctor_id" />
+                            <field name="operation_id" />
                         </group>
 
                         <group>
                             <field name="ref_appointment" />
                             <field name="active" />
-
                         </group>
                     </group>
                     <notebook>
+
+                        <page string="Progress" name="progress">
+                            <group>
+                                <field name="progress" widget="percentpie" />
+                            </group>
+                        </page>
 
                         <page string="Description" name="description">
                             <group>
@@ -195,7 +238,7 @@
         <field name="name">Appointments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">hospital.appointment</field>
-        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="view_mode">tree,form,kanban,activity,calendar</field>
         <field name="view_id" ref="view_hospital_appointment_tree" />
 
         <field name="help" type="html">

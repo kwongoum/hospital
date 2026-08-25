@@ -1,0 +1,10 @@
+<odoo>
+    <record id="action_appointment_done" model="ir.actions.server">
+        <field name="name">Mark Appointment as Done</field>
+        <field name="model_id" ref="model_hospital_appointment" />
+        <field name="binding_model_id" ref="model_hospital_appointment" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">records.action_done()</field>
+    </record>
+</odoo>

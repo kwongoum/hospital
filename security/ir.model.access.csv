@@ -7,5 +7,6 @@ access_appointment_medicine_line,access.appointment.medicine.line,model_appointm
 access_hospital_patient_tag,access.hospital.patient.tag,model_hospital_patient_tag,,1,1,1,1
 access_appointment_cancel_wizard,access.appointment.cancel.wizard,model_appointment_cancel_wizard,,1,1,1,1
 access_sale_order,access.sale.order,model_sale_order,,1,1,1,1
+access_hospital_operation,access.hospital.operation,model_hospital_operation,,1,1,1,1
 
 

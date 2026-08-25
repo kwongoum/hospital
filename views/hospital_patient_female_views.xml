@@ -1,13 +1,13 @@
 <odoo>
 
-    <!-- 
+
     <record id="view_hospital_patient_female_tree" model="ir.ui.view">
         <field name="name">hospital.patient.female.tree</field>
         <field name="model">hospital.patient</field>
-        <field name="inherit_id" ref="view_hospital_patient_tree" />
+        <field name="inherit_id" ref="hospital.view_hospital_patient_tree" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='active']" position="after">
-                <field name="age" />
+            <xpath expr="//field[@name='address']" position="after">
+                <field name="age" avg="Average Age" />
             </xpath>
         </field>
     </record>
@@ -16,16 +16,12 @@
     <record id="view_hospital_patient_female_form" model="ir.ui.view">
         <field name="name">hospital.patient.female.form</field>
         <field name="model">hospital.patient</field>
-        <field name="inherit_id" ref="view_hospital_patient_form" />
+        <field name="inherit_id" ref="hospital.view_hospital_patient_form" />
 
         <field name="arch" type="xml">
-
-
             <xpath expr="//field[@name='gender']" position="after">
                 <field name="age" />
             </xpath>
-
-
         </field>
     </record>
 
@@ -43,11 +39,12 @@
         <field name="domain"> [('gender','=','female')]</field>
         <field name="context"> {
             'default_gender':'female',
-            'default_age': 25
+            'default_age': 25,
+            'hide_gender':'female'
             }</field>
 
 
-    </record> -->
+    </record>
 
 
 </odoo>

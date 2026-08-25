@@ -1,0 +1,63 @@
+<odoo>
+
+
+    <record id="view_hospital_operation_tree" model="ir.ui.view">
+        <field name="name">hospital.operation.tree</field>
+        <field name="model">hospital.operation</field>
+        <field name="arch" type="xml">
+            <!-- <tree string="Operation Tree" delete="0"> -->
+            <tree string="Operation Tree">
+                <field name="doctor_id" />
+                <field name="operation_name" />
+                <field name="reference_record" />
+                <field name="sequence" widget="handle" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_hospital_operation_form" model="ir.ui.view">
+        <field name="name">hospital.operation.form</field>
+        <field name="model">hospital.operation</field>
+
+        <field name="arch" type="xml">
+            <!-- <form string="Operation Form" edit="0" delete="0"> -->
+            <form string="Operation Form">
+                <sheet>
+                    <group>
+                        <group>
+
+                            <field name="doctor_id" />
+                            <field name="operation_name" />
+                            <field name="reference_record" />
+                        </group>
+                        <group>
+                            <field name="sequence" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_hospital_operation" model="ir.actions.act_window">
+        <field name="name">Operations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hospital.operation</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hospital_operation_tree" />
+
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first operation!
+            </p>
+        </field>
+    </record>
+
+    <menuitem
+        id="hospital_operation_menu"
+        name="Operations"
+        parent="menu_appointment_root"
+        action="action_hospital_operation"
+        sequence="10" />
+</odoo>

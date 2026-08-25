@@ -8,6 +8,7 @@
                     <field name="name" />
                     <field name="color" widget="color_picker" />
                     <field name="active" />
+                    <field name="sequence" />
                 </tree>
             </field>
         </record>
@@ -21,6 +22,7 @@
                             <field name="name" />
                             <field name="color" widget="color_picker" />
                             <field name="active" />
+                            <field name="sequence" />
                         </group>
                     </sheet>
                 </form>

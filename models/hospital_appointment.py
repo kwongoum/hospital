@@ -10,13 +10,21 @@ class HospitalAppointment(models.Model):
     _description = "Hospital Appointment"
     _inherit =["mail.thread", "mail.activity.mixin"]
     _rec_name="ref_appointment"
-   
+    _order="appointment_date desc, patient_name asc"
+    
+    def name_get(self):
+        result = []
+        for record in self:
+            name = f"{record.ref_appointment} - {record.patient_id.name}"
+            result.append((record.id, name))
+        return result
     
      # fields definitions
 
-    patient_id = fields.Many2one(comodel_name="hospital.patient", string="Patient")
+    patient_id = fields.Many2one(comodel_name="hospital.patient", string="Patient", ondelete="cascade")
+    patient_name= fields.Char(related='patient_id.name', string='Patient Name', store=True)
     #doctor_id=fields.Many2one("hospital.doctor",string="Doctor")
-    initial_doctor_id=fields.Many2one("res.users",string="Initial Doctor")
+    doctor_id=fields.Many2one("res.users",string="Doctor")
     description = fields.Char(string="Description", tracking=True, required=True, default=" standard checkup")
     active = fields.Boolean(string="Active", default=True)
     appointment_date = fields.Datetime(string="Appointment Date", default= fields.Datetime.now) 
@@ -24,8 +32,13 @@ class HospitalAppointment(models.Model):
     booking_date = fields.Date(string="Booking Date",  default=fields.Date.context_today)
     gender = fields.Selection(related="patient_id.gender", string="Gender")
     
-    ref_appointment = fields.Char(string="Reference Appointment", compute="_compute_ref_appointment", store=True)
-    prescription = fields.Html(string="Prescription")
+    ref_appointment = fields.Char(string="Ref. Appointment", compute="_compute_ref_appointment", store=True)
+    # ref_patient_sequence = fields.Char(string="Reference Patient Sequence", related="patient_id.ref_patient_sequence",
+    #                                    readonly=True)
+
+    operation_id = fields.Many2one("hospital.operation", string="Operation")
+    ref_patient_sequence = fields.Char(string="Ref. Patient Seq.")
+    prescription = fields.Html(string=" Prescription", default="<h3>Prescription</h3><p>Enter prescription details here...</p>")
     priority= fields.Selection(
         selection=[ ("0", "None"),("1", "Low"), ("2", "Medium"), ("3", "High")],
         string="Priority"
@@ -35,6 +48,8 @@ class HospitalAppointment(models.Model):
         string="Status", default="draft" )
     
     appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', string ="Medicine Lines")
+    progress = fields.Integer(string="Progress", default=0, compute="_compute_progress")
+    
     hide_price = fields.Boolean(string="Hide Price")
   
   
@@ -49,9 +64,14 @@ class HospitalAppointment(models.Model):
                     "You cannot mark the appointment as done without a prescription."
                 )
         return super(HospitalAppointment, self).write(vals)
-     
-     # Compute methods        
     
+    def unlink(self): 
+        for record in self:
+            if record.state != "draft":
+                raise ValidationError("You cannot delete an appointment that is not in draft state.")
+        return super().unlink()
+
+     # Compute methods           
     @api.depends("patient_id")
     def _compute_ref_appointment(self):
         for record in self:
@@ -60,6 +80,18 @@ class HospitalAppointment(models.Model):
             else:
                 record.ref_appointment = False
     
+    @api.depends("state")
+    def _compute_progress(self):
+        for record in self:
+            if record.state == "draft":
+                record.progress = 25
+            elif record.state == "in_consultation":
+                record.progress = 50
+            elif record.state == "done":
+                record.progress = 100
+            else:
+                record.progress = 0
+                
     # Onchange methods
     @api.onchange("patient_id")
     def onchange_patient_id(self):
@@ -67,10 +99,12 @@ class HospitalAppointment(models.Model):
             if record.patient_id:
                 record.description= f"Appointment for {record.patient_id.name}"
                 record.state = "draft"
+                record.ref_patient_sequence = record.patient_id.ref_patient_sequence
                 # record.ref = f"REF-{record.patient_id.name[:3].upper()}-{record.id}"
             else:
                 record.description = "standard checkup"
                 record.ref_appointment = False
+                record.ref_patient_sequence = False
 
     
     # Actions methods     
@@ -86,6 +120,7 @@ class HospitalAppointment(models.Model):
     }
         
     def  action_reset_to_draft(self):
+        _logger.info("Resetting. self value===========================%s", self)
         for rec in self:
             rec.state = 'draft'    
     
@@ -100,23 +135,25 @@ class HospitalAppointment(models.Model):
                     }
             }
             
-    def action_done(self):
-       
-             self.write({'state': 'done'})
-             # effet UI (notification)
-             return {
-            
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': 'Success 🎉',
-                'message': 'Consultation completed successfully!',
-                'type': 'success',
-                'sticky': False,
-                 'next': {'type': 'ir.actions.act_window_close'},  # Refresh the form to show the key
-            }
-        }
+   
     
+    def action_done(self):
+        appointments = self.filtered(lambda rec: rec.state == "in_consultation")
+
+        if not appointments:
+            raise ValidationError("You can only mark an appointment as Done if it is in consultation state.")
+        appointments.write({ "state": "done" })
+        return {
+        "type": "ir.actions.client",
+        "tag": "display_notification",
+        "params": {
+            "title": "Success 🎉",
+            "message": f"{len(appointments)} consultation(s) completed successfully!",
+            "type": "success",
+            "sticky": False,
+            "next": {"type": "ir.actions.act_window_close"},
+            },
+        }  
     # def action_cancel(self):
     #     for rec in self:
     #         print("Cancelling appointment..........................................")
@@ -130,6 +167,20 @@ class HospitalAppointment(models.Model):
         return action 
 
         
+        
+    def action_open_appointment(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'hospital.appointment',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'new',  # ouvre en popup
+            'context': {'form_view_initial_mode': 'view', 'readonly': True}
+        }
+    
+        
+        # other methods
     def create_doctor_user(self):
         self.ensure_one()
         group_doctor = self.env.ref('base.group_user')  # exemple groupe
