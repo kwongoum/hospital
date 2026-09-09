@@ -58,8 +58,9 @@
                 <field name="description" />
                 <field name="gender" widget="badge" />
 
-                <field name="appointment_date" />
-                <field name="doctor_id" widget="many2one_avatar_user" />
+                <field name="appointment_date" decoration-bf="True" />
+                <field name="doctor_id" widget="many2one_avatar_user"
+                    class="my_doctor_field_italic" />
                 <field name="state" widget="badge"
                     decoration-danger="state == 'cancelled'"
                     decoration-success="state == 'done'"
@@ -224,11 +225,15 @@
                                         <field name="price_subtotal"
                                             attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
                                         />
-
                                     </group>
+
                                 </form>
                             </field>
-
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="price_total"
+                                    widget="monetary"
+                                    options="{'currency_field': 'currency_id'}" />
+                            </group>
                         </page>
 
                     </notebook>

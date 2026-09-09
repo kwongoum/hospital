@@ -47,7 +47,11 @@ class HospitalAppointment(models.Model):
         selection=[("draft","Draft"), ("in_consultation","In Consultation"), ("done","Done"),("cancelled","Cancelled")],
         string="Status", default="draft" )
     
-    appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', string ="Medicine Lines")
+    appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', 
+                                                    string ="Medicine Lines")
+    price_total = fields.Monetary(string="Total", compute="_compute_price_total", currency_field='currency_id')
+   
+    
     company_id= fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
     currency_id= fields.Many2one('res.currency', string='Currency', related='company_id.currency_id', readonly=True)
   
@@ -94,6 +98,13 @@ class HospitalAppointment(models.Model):
                 record.progress = 100
             else:
                 record.progress = 0
+    
+    @api.depends('appointment_medicine_line_ids.price_subtotal')
+    def _compute_price_total(self):
+            for appointment in self:
+                total = sum(line.price_subtotal for line in appointment.appointment_medicine_line_ids)
+                appointment.price_total = total
+        
                 
     # Onchange methods
     @api.onchange("patient_id")
@@ -202,5 +213,4 @@ class HospitalAppointment(models.Model):
              'password': 'Doctor123',
             'groups_id': [(6, 0, [group_doctor.id])],
         })
-
         return user

@@ -28,5 +28,10 @@
     "installable": True,
     "application": True,
     "auto_install": False,
-    "assets": {},
+    "assets": {
+        'web.assets_backend': [
+            'hospital/static/src/css/hospital.css',
+        ],
+    },
+    
 }  # type: ignore
