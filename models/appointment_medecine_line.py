@@ -9,7 +9,10 @@ class AppointmentMedicineLine(models.Model):
     medicine_id = fields.Many2one('product.product', string='Medicine')
     price_unit = fields.Float(string='Unit Price', related='medicine_id.list_price', readonly=True)
     quantity = fields.Integer(string='Quantity', default=1)
-    price_subtotal = fields.Float(string='Subtotal', compute='_compute_price_subtotal', store=True)
+    currency_id = fields.Many2one('res.currency', string='Currency', 
+                                  related='appointment_id.currency_id', readonly=True)
+    price_subtotal = fields.Monetary(string='Subtotal', compute='_compute_price_subtotal', 
+                                      currency_field='currency_id')
     
     @api.depends('price_unit', 'quantity')
     def _compute_price_subtotal(self):

@@ -166,11 +166,19 @@
                             <field name="appointment_date" />
                             <field name="doctor_id" />
                             <field name="operation_id" />
+                            <field name="company_id" groups="base.group_multi_company" />
+                            <field name="currency_id" groups="base.group_multi_currency" />
                         </group>
 
                         <group>
                             <field name="ref_appointment" />
                             <field name="active" />
+                        </group>
+                        <group>
+                            <button name="action_view_xray"
+                                type="object"
+                                string="View X-Ray"
+                                class="btn-primary" />
                         </group>
                     </group>
                     <notebook>
@@ -196,10 +204,12 @@
                             <field name="appointment_medicine_line_ids">
                                 <tree string="Medicine Lines" editable="bottom">
                                     <field name="medicine_id" />
-                                    <field name="price_unit"
+                                    <field name="price_unit" widget="monetary"
+                                        options="{'currency_field': 'currency_id'}"
                                         attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
                                     />
                                     <field name="quantity" />
+                                    <field name="currency_id" invisible="1" />
                                     <field name="price_subtotal"
                                         attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
                                     />

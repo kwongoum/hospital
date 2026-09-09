@@ -5,10 +5,12 @@
             <field name="model">hospital.patient.tag</field>
             <field name="arch" type="xml">
                 <tree string="Patient Tag Tree" sample="1">
+                    <field name="sequence" widget="handle" />
                     <field name="name" />
                     <field name="color" widget="color_picker" />
+
                     <field name="active" />
-                    <field name="sequence" />
+
                 </tree>
             </field>
         </record>

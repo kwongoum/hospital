@@ -25,9 +25,9 @@ class HospitalAppointment(models.Model):
     patient_name= fields.Char(related='patient_id.name', string='Patient Name', store=True)
     #doctor_id=fields.Many2one("hospital.doctor",string="Doctor")
     doctor_id=fields.Many2one("res.users",string="Doctor")
-    description = fields.Char(string="Description", tracking=True, required=True, default=" standard checkup")
+    description = fields.Char(string="Description", tracking=10, required=True, default=" standard checkup")
     active = fields.Boolean(string="Active", default=True)
-    appointment_date = fields.Datetime(string="Appointment Date", default= fields.Datetime.now) 
+    appointment_date = fields.Datetime(string="Appointment Date", tracking=20 , default= fields.Datetime.now) 
     
     booking_date = fields.Date(string="Booking Date",  default=fields.Date.context_today)
     gender = fields.Selection(related="patient_id.gender", string="Gender")
@@ -48,6 +48,9 @@ class HospitalAppointment(models.Model):
         string="Status", default="draft" )
     
     appointment_medicine_line_ids = fields.One2many('appointment.medicine.line','appointment_id', string ="Medicine Lines")
+    company_id= fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
+    currency_id= fields.Many2one('res.currency', string='Currency', related='company_id.currency_id', readonly=True)
+  
     progress = fields.Integer(string="Progress", default=0, compute="_compute_progress")
     
     hide_price = fields.Boolean(string="Hide Price")
@@ -178,7 +181,15 @@ class HospitalAppointment(models.Model):
             'target': 'new',  # ouvre en popup
             'context': {'form_view_initial_mode': 'view', 'readonly': True}
         }
-    
+    def action_view_xray(self):
+        
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_url",
+            "name": "X-Ray",
+            "url": f"https://www.uzbrussel.be/fr/web/radiologie/vos-images-scann%C3%A9es",
+            "target": "new"
+        }
         
         # other methods
     def create_doctor_user(self):

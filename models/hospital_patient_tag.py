@@ -3,6 +3,7 @@ from odoo import models,fields,api
 class HospitalPatientTag(models.Model):
     _name = "hospital.patient.tag"
     _description = "Hospital Patient Tag"
+    _order = "sequence, id"
 
 
     name = fields.Char(string="Tag Name", required=True)
