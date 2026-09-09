@@ -2,6 +2,10 @@ from odoo.tools import html2plaintext
 from odoo.exceptions import ValidationError
 import logging
 from odoo import api, fields, models
+from urllib.parse import quote
+from odoo.exceptions import UserError
+
+
 _logger = logging.getLogger(__name__)
 
 class HospitalAppointment(models.Model):
@@ -202,6 +206,40 @@ class HospitalAppointment(models.Model):
             "target": "new"
         }
         
+     
+    def action_whatsapp(self):
+        self.ensure_one()
+
+        patient = self.patient_id
+
+        if not patient.phone:
+            raise UserError(
+                "Patient does not have a phone number."
+            )
+
+        phone = patient.phone.replace("+", "")
+        phone = phone.replace(" ", "")
+        phone = phone.replace("-", "")
+
+        message = (
+            f"Hello *{patient.name}*,\n\n"
+            f"We are contacting you regarding your *appointment* "
+            f"on {self.appointment_date}.\n\n"
+            f"_Thank you._"
+        )
+
+        url = (
+            f"https://wa.me/{phone}"
+            f"?text={quote(message)}"
+        )
+
+        return {
+            "type": "ir.actions.act_url",
+            "url": url,
+            "target": "new",
+        }    
+       
+       
         # other methods
     def create_doctor_user(self):
         self.ensure_one()

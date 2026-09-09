@@ -129,6 +129,9 @@
                     <button name="action_cancel" type="object" string="Cancel"
                         class="btn-secondary"
                     />
+                    <button name="action_whatsapp" type="object" string="Send In WhatsApp"
+                        class="btn-success" icon="fa-whatsapp"
+                    />
 
 
                     <!-- <button name="%(action_appointment_cancel_wizard)d" type="action"
