@@ -1,45 +1,45 @@
 <odoo>
+    <data noupdate="1">
+        <!-- MALES -->
+        <record id="patient_1" model="hospital.patient">
+            <field name="name">John Doe</field>
+            <field name="address">Brussels</field>
+            <field name="gender">male</field>
+            <field name="active">True</field>
+            <field name="date_of_birth">1995-04-12</field>
+        </record>
 
-    <!-- MALES -->
-    <record id="patient_1" model="hospital.patient">
-        <field name="name">John Doe</field>
-        <field name="address">Brussels</field>
-        <field name="gender">male</field>
-        <field name="active">True</field>
-        <field name="date_of_birth">1995-04-12</field>
-    </record>
+        <record id="patient_2" model="hospital.patient" forcecreate="0">
+            <field name="name">Michael Smith</field>
+            <field name="address">Liège</field>
+            <field name="gender">male</field>
+            <field name="active">True</field>
+            <field name="date_of_birth">1988-09-20</field>
+        </record>
 
-    <record id="patient_2" model="hospital.patient">
-        <field name="name">Michael Smith</field>
-        <field name="address">Liège</field>
-        <field name="gender">male</field>
-        <field name="active">True</field>
-        <field name="date_of_birth">1988-09-20</field>
-    </record>
+        <record id="patient_3" model="hospital.patient">
+            <field name="name">David Martin</field>
+            <field name="address">Namur</field>
+            <field name="gender">male</field>
+            <field name="active">True</field>
+            <field name="date_of_birth">2000-01-05</field>
+        </record>
 
-    <record id="patient_3" model="hospital.patient">
-        <field name="name">David Martin</field>
-        <field name="address">Namur</field>
-        <field name="gender">male</field>
-        <field name="active">True</field>
-        <field name="date_of_birth">2000-01-05</field>
-    </record>
+        <!-- FEMALES -->
+        <record id="patient_4" model="hospital.patient" forcecreate="0">
+            <field name="name">Sarah Johnson</field>
+            <field name="address">Charleroi</field>
+            <field name="gender">female</field>
+            <field name="active">True</field>
+            <field name="date_of_birth">1992-07-18</field>
+        </record>
 
-    <!-- FEMALES -->
-    <record id="patient_4" model="hospital.patient">
-        <field name="name">Sarah Johnson</field>
-        <field name="address">Charleroi</field>
-        <field name="gender">female</field>
-        <field name="active">True</field>
-        <field name="date_of_birth">1992-07-18</field>
-    </record>
-
-    <record id="patient_5" model="hospital.patient">
-        <field name="name">Emma Brown</field>
-        <field name="address">Louvain-la-Neuve</field>
-        <field name="gender">female</field>
-        <field name="active">True</field>
-        <field name="date_of_birth">1998-11-30</field>
-    </record>
-
+        <record id="patient_5" model="hospital.patient" forcecreate="0">
+            <field name="name">Emma Brown</field>
+            <field name="address">Louvain-la-Neuve</field>
+            <field name="gender">female</field>
+            <field name="active">True</field>
+            <field name="date_of_birth">1998-11-30</field>
+        </record>
+    </data>
 </odoo>
