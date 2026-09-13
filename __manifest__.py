@@ -6,7 +6,7 @@
     "license": "LGPL-3",
     "sequence": -100,
     "category": "Custom",
-    "depends": ["base","mail","product","sale","sale_stock"],
+    "depends": ["base","mail","product","sale","sale_stock","account","stock","contacts"],
     "data": [
         "security/ir.model.access.csv",
         "data/patient_data.xml",
@@ -20,8 +20,10 @@
         "views/appointment_cancel_wizard_views.xml",
         "views/hospital_appointment_views.xml",
         "views/hospital_patient_tag_views.xml",
+        "views/account_move_views.xml",
          "views/menu.xml",
         "views/hospital_operation_views.xml",
+        "reports/patient_report.xml"
        
     ],
     "images": ["static/description/icon.png"],

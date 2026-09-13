@@ -9,14 +9,10 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
         # fields definitions
-    confirmed_user_id = fields.Many2one('res.users', string='Confirmed By')
-    appointment_id = fields.Many2one('hospital.appointment',
-                                     string='Appointment',
-                                     ondelete='set null')         
+    confirmed_user_id = fields.Many2one("res.users", string="Confirmed By")
+    appointment_id = fields.Many2one("hospital.appointment", string="Appointment", ondelete="set null")         
     
-    patient_id = fields.Many2one('hospital.patient',
-                                     string='Patient',
-                                     ondelete='set null')
+    patient_id = fields.Many2one("hospital.patient", string="Patient", ondelete="set null")
     
         # actions  functions 
     def action_confirm(self):
@@ -24,3 +20,9 @@ class SaleOrder(models.Model):
          _logger.info("Commande confirmée ============== : %s", self.confirmed_user_id.name)
          return super(SaleOrder, self).action_confirm()
         
+    def _prepare_invoice(self):
+        vals = super(SaleOrder, self)._prepare_invoice()
+
+        vals["confirmed_user_id"] = self.confirmed_user_id.id
+
+        return vals

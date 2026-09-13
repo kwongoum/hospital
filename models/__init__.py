@@ -6,3 +6,4 @@ from . import appointment_medecine_line
 from . import hospital_patient_tag
 from . import sale_order
 from . import hospital_operation
+from . import account_move

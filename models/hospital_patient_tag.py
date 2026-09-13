@@ -6,7 +6,7 @@ class HospitalPatientTag(models.Model):
     _order = "sequence, id"
 
 
-    name = fields.Char(string="Tag Name", required=True)
+    name = fields.Char(string="Tag Name", required=True, trim=False)
     color = fields.Integer(string="Color Index")
     active = fields.Boolean(string="Active", default=True, copy=False)
     sequence= fields.Integer(string="Sequence")
