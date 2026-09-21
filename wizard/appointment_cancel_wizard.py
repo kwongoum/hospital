@@ -29,8 +29,11 @@ class AppointmentCancelWizard(models.TransientModel):
             if appointment and appointment_date == fields.Date.context_today(self):
                 raise ValidationError("You cannot cancel an appointment scheduled for today.")
             appointment.write({'state': 'cancelled'})
-        return {
+        
+        
+              
+            return {
             "type":"ir.actions.client",
             "tag": "reload"
-        }
+        } 
 

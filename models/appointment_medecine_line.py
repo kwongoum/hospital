@@ -7,7 +7,7 @@ class AppointmentMedicineLine(models.Model):
 
     appointment_id = fields.Many2one('hospital.appointment', string='Appointment')
     medicine_id = fields.Many2one('product.product', string='Medicine')
-    price_unit = fields.Float(string='Unit Price', related='medicine_id.list_price', readonly=True)
+    price_unit = fields.Float(string='Unit Price', related='medicine_id.list_price', digits='Product Price', readonly=True)
     quantity = fields.Integer(string='Quantity', default=1)
     currency_id = fields.Many2one('res.currency', string='Currency', 
                                   related='appointment_id.currency_id', readonly=True)

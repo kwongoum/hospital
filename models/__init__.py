@@ -7,3 +7,5 @@ from . import hospital_patient_tag
 from . import sale_order
 from . import hospital_operation
 from . import account_move
+from . import sale_order_line
+from . import account_move_line

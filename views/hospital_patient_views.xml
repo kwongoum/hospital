@@ -105,7 +105,9 @@
                             <field name="gender" widget="radio" options=" {'horizontal':true}"
                                 invisible=" context.get('hide_gender' )=='female'" />
                             <field name="address" />
-                            <field name="active" help="Inactive patients will not appear in lists" />
+                            <field name="active"
+                                help="Inactive patients will not appear in
+                            lists" />
                             <field name="is_covered" widget="boolean_toggle" />
                             <field name="tag_ids" widget="many2many_tags"
                                 options="{'color_field':'color'}" />

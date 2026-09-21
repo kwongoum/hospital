@@ -72,7 +72,7 @@
                     class="btn-success"
                     attrs="{'invisible':[('state', '!=', 'in_consultation')]}"
                 />
-                <button name="action_cancel" type="object" icon="fa-times"
+                <button name="action_cancel_in_appointment" type="object" icon="fa-times"
                     class="btn-danger"
                     attrs="{'invisible':[('state', 'not in', [ 'draft', 'in_consultation'])]}"
                 />
@@ -126,7 +126,7 @@
                         attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
                         data-hotkey="d"
                     />
-                    <button name="action_cancel" type="object" string="Cancel"
+                    <button name="action_cancel_in_appointment" type="object" string="Cancel"
                         class="btn-secondary"
                     />
                     <button name="action_whatsapp" type="object" string="Send In WhatsApp"
@@ -209,7 +209,7 @@
                                 <tree string="Medicine Lines" editable="bottom">
                                     <field name="medicine_id" />
                                     <field name="price_unit" widget="monetary"
-                                        options="{'currency_field': 'currency_id'}"
+                                        options="{'currency_field': 'currency_id',  'field_digits':true}"
                                         attrs="{'column_invisible': [('parent.hide_price', '!=', False)]}"
                                     />
                                     <field name="quantity" />

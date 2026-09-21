@@ -177,7 +177,7 @@ class HospitalAppointment(models.Model):
     #         print("Cancelling appointment..........................................")
     #         rec.state = 'cancelled'
 
-    def action_cancel(self):
+    def action_cancel_in_appointment(self):
         _logger.info("self = %s", self)
         _logger.info("self.env = %s", self.env)
         _logger.info( "action = %s",self.env.ref("hospital.action_appointment_cancel_wizard"))

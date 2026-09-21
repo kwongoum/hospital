@@ -16,6 +16,12 @@
             <xpath expr="//field[@name='commitment_date']" position="after">
                 <field name="appointment_id" />
             </xpath>
+
+            <!-- Ajouter dans order_line  discount_reason après tax_id -->
+            <xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="after">
+                <field name="discount_reason" />
+
+            </xpath>
         </field>
     </record>
 
