@@ -34,6 +34,7 @@ class HospitalAppointment(models.Model):
     appointment_date = fields.Datetime(string="Appointment Date", tracking=20 , default= fields.Datetime.now) 
     
     booking_date = fields.Date(string="Booking Date",  default=fields.Date.context_today)
+    
     gender = fields.Selection(related="patient_id.gender", string="Gender")
     
     ref_appointment = fields.Char(string="Ref. Appointment", compute="_compute_ref_appointment", store=True)
@@ -161,6 +162,7 @@ class HospitalAppointment(models.Model):
         if not appointments:
             raise ValidationError("You can only mark an appointment as Done if it is in consultation state.")
         appointments.write({ "state": "done" })
+        action = self.env.ref("hospital.view_hospital_patient_form")
         return {
         "type": "ir.actions.client",
         "tag": "display_notification",

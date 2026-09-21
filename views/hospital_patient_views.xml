@@ -36,6 +36,15 @@
         <field name="model">hospital.patient</field>
         <field name="arch" type="xml">
             <tree string="Patient Tree" sample="1" export_xlsx="0">
+                <header>
+                    <button
+                        name="action_get_external_patient"
+                        type="object"
+                        string="Get External Patient"
+                        class="oe_highlight"
+                    />
+                </header>
+
                 <field name="name" />
                 <field name="address" />
                 <field name="gender" />

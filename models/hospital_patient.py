@@ -1,8 +1,10 @@
+import requests
 from asyncio.log import logger
 from datetime import datetime
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 import logging 
+
 from odoo.exceptions import UserError
 from datetime import date
 from dateutil.relativedelta import relativedelta
@@ -278,3 +280,29 @@ class HospitalPatient(models.Model):
 
         return []
     
+      # API externe     
+      
+    def action_get_external_patient(self):
+        url = "https://jsonplaceholder.typicode.com/users/1"
+
+        response = requests.get(url)
+        response.raise_for_status()
+
+        data = response.json()
+
+        self.create({
+            "name": data["name"],
+            "email": data["email"],
+            "phone": data["phone"],
+        })
+
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": "Success 🎉",
+                "message": "External patient imported successfully.",
+                "type": "success",
+                "sticky": False,
+            },
+        }
