@@ -7,6 +7,7 @@
     "sequence": -100,
     "category": "Custom",
     "depends": ["base","mail","product","sale","sale_stock","account","stock","contacts"],
+    "excludes": ["estate"],
     "data": [
         "security/ir.model.access.csv",
         "data/patient_data.xml",
