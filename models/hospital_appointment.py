@@ -155,7 +155,7 @@ class HospitalAppointment(models.Model):
             }
             
    
-    
+    """ 
     def action_done(self):
         appointments = self.filtered(lambda rec: rec.state == "in_consultation")
 
@@ -173,7 +173,47 @@ class HospitalAppointment(models.Model):
             "sticky": False,
             "next": {"type": "ir.actions.act_window_close"},
             },
-        }  
+        }   """
+        
+        
+    def action_done(self):
+        appointments = self.filtered( lambda rec: rec.state == "in_consultation")
+        if not appointments:
+         raise ValidationError("You can only mark an appointment as Done if it is in consultation state.")
+
+        appointments.write({"state": "done"})
+
+        patient =  appointments[0].patient_id
+        return {
+    "type": "ir.actions.client",
+    "tag": "display_notification",
+    "params": {
+        "title": "Success 🎉",
+        "message": f"{len(appointments)} consultation(s) completed successfully!",
+        "type": "success",
+        "sticky": True,
+        "next": {
+            "type": "ir.actions.act_window",
+            "name": "Patient",
+            "res_model": "hospital.patient",
+            "view_mode": "form",
+            "res_id": patient.id,
+            "views": [
+                (
+                    self.env.ref(
+                        "hospital.view_hospital_patient_form"
+                    ).id,
+                    "form",
+                )
+            ],
+            "target": "current",
+        },
+    },
+}
+       
+        
+        
+        
     # def action_cancel(self):
     #     for rec in self:
     #         print("Cancelling appointment..........................................")
@@ -234,7 +274,8 @@ class HospitalAppointment(models.Model):
             f"https://wa.me/{phone}"
             f"?text={quote(message)}"
         )
-
+        self.message_post(subject="WhatsApp Message",
+                          body=f"WhatsApp message sent to {patient.name} ({patient.phone})")
         return {
             "type": "ir.actions.act_url",
             "url": url,
