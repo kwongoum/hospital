@@ -22,6 +22,11 @@ class AppointmentCancelWizard(models.TransientModel):
     
     def action_cancel(self):
         logger.info("Cancelling appointment. self value===========================%s", self)
+        
+        query= """SELECT id, patient_id FROM hospital_appointment WHERE id = %s""" % self.appointment_id.id
+        self.env.cr.execute(query)
+        result = self.env.cr.fetchall()
+        logger.info("Query result===========================%s", result)        
         for record in self:
             appointment = record.appointment_id 
             logger.info(" Appointment value===========================%s", appointment)
