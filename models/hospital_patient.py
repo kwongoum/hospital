@@ -219,6 +219,7 @@ class HospitalPatient(models.Model):
                 "des rendez-vous et ne peut pas être supprimé."
             )
     def action_view(self):
+        
             pass    
     
     def action_view_appointments(self):

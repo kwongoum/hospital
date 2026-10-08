@@ -1,6 +1,6 @@
 import logging
 from odoo import models, fields, api
-
+from odoo.addons.sale.models.sale_order import SaleOrder as SaleOrderBase
 logging.basicConfig(level=logging.INFO)
 import logging
 _logger = logging.getLogger(__name__)
@@ -26,3 +26,9 @@ class SaleOrder(models.Model):
         vals["confirmed_user_id"] = self.confirmed_user_id.id
 
         return vals
+    
+    """ def _unlink_except_draft_or_cancel(self):
+        return 
+    """
+    
+   

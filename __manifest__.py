@@ -14,6 +14,7 @@
         'data/appointment_server_action.xml',
         "data/hospital.patient.csv",
         "data/patient_sequence.xml",
+        "data/mail_template_data.xml",
         "views/sale_order_views.xml",
         "views/hospital_patient_views.xml",
         "views/hospital_patient_female_views.xml",
@@ -24,6 +25,7 @@
         "views/account_move_views.xml",
          "views/menu.xml",
         "views/hospital_operation_views.xml",
+        "views/partner_category_views.xml",
         "reports/patient_report.xml"
        
     ],

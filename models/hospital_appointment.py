@@ -295,3 +295,11 @@ class HospitalAppointment(models.Model):
             'groups_id': [(6, 0, [group_doctor.id])],
         })
         return user
+    
+    
+        # email tmplate methods   
+    def action_send_confirmation_email(self):
+        template = self.env.ref('hospital.confirm_appointment_email' )
+
+        template.send_mail(self.id,force_send=True)
+    

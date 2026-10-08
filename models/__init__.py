@@ -9,3 +9,6 @@ from . import hospital_operation
 from . import account_move
 from . import sale_order_line
 from . import account_move_line
+from . import partner_category
+from . import external_app_with_odoo_api
+from . import sale_report

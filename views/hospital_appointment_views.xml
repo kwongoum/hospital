@@ -133,7 +133,8 @@
                         class="btn-success" icon="fa-whatsapp"
                     />
 
-
+                    <button name="action_send_confirmation_email" type="object"
+                        string="Send Email" />
                     <!-- <button name="%(action_appointment_cancel_wizard)d" type="action"
                         string="Cancel" class="btn-secondary"
                         attrs="{'invisible':[('state', 'in', ['done', 'cancelled'])]}"
@@ -207,6 +208,7 @@
                         <page string="Pharmacy" name="pharmacy">
                             <field name="appointment_medicine_line_ids">
                                 <tree string="Medicine Lines" editable="bottom">
+                                    <field name="sl_nb" readonly="1" />
                                     <field name="medicine_id" />
                                     <field name="price_unit" widget="monetary"
                                         options="{'currency_field': 'currency_id',  'field_digits':true}"
