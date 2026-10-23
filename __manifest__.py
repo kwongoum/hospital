@@ -6,7 +6,7 @@
     "license": "LGPL-3",
     "sequence": -100,
     "category": "Custom",
-    "depends": ["base","mail","product","sale","sale_stock","account","stock","contacts"],
+    "depends": ["base","mail","product","sale","sale_stock","account","stock","contacts","report_xlsx"],
     "excludes": ["estate"],
     "data": [
         "security/ir.model.access.csv",
@@ -18,17 +18,20 @@
         "views/sale_order_views.xml",
         "views/hospital_patient_views.xml",
         "views/hospital_patient_female_views.xml",
-        
         "views/appointment_cancel_wizard_views.xml",
+        "views/appointment_report_wizard_views.xml",
         "views/hospital_appointment_views.xml",
         "views/hospital_patient_tag_views.xml",
         "views/account_move_views.xml",
          "views/menu.xml",
         "views/hospital_operation_views.xml",
         "views/partner_category_views.xml",
-        "reports/patient_report.xml"
-       
-    ],
+        "reports/report.xml",
+        "reports/patient_details_template.xml",
+        "reports/patient_card_template.xml",
+        "reports/patient_appointment_template.xml",
+        ],
+
     "images": ["static/description/icon.png"],
     "installable": True,
     "application": True,

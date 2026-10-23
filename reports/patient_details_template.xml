@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="patient_details_template">
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="o">
+
+                <!-- Layout externe de l'entreprise -->
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+
+                        <!-- 1. Patient ID Card -->
+                        <h2>Patient ID Card</h2>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <table class="table table-condensed"
+                                    style="border: 3px solid black !important;">
+                                    <tr>
+                                        <td width="40%">
+                                            <p style="text-align:center; padding-top:10px;">
+                                                <img t-if="not o.image_1920"
+                                                    t-att-src="'/web/static/src/img/placeholder.png'"
+                                                    height="140"
+                                                    width="120"
+                                                    style="border: 1px solid black;" />
+
+                                                <img t-if="o.image_1920"
+                                                    t-att-src="image_data_uri(o.image_1920)"
+                                                    height="140"
+                                                    width="120"
+                                                    style="border: 1px solid black;" />
+                                            </p>
+                                        </td>
+
+                                        <td width="60%">
+                                            <table class="table table-sm">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">
+                                                        <strong>
+                                                            <span t-field="o.name" />
+                                                        </strong>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Age</strong>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span t-field="o.age" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <strong>Patient Reference</strong>
+                                                    </td>
+                                                    <td>:</td>
+                                                    <td>
+                                                        <span t-field="o.ref_patient" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- 2. Patient Details -->
+                        <div>
+                            <h2>Patient Details</h2>
+
+                            <p>
+                                <strong>Sequence Reference:</strong>
+                                <span t-field="o.ref_patient_sequence" />
+                            </p>
+
+                            <p>
+                                <strong>Name:</strong>
+                                <span t-field="o.name" />
+                            </p>
+
+                            <p>
+                                <strong>Date of Birth:</strong>
+                                <span t-field="o.date_of_birth" />
+                            </p>
+
+                            <p>
+                                <strong>Gender:</strong>
+                                <span t-field="o.gender" />
+                            </p>
+
+                            <p>
+                                <strong>Age:</strong>
+                                <span t-field="o.age" />
+                            </p>
+                        </div>
+
+                        <!-- 3. Appointment Details -->
+                        <div>
+                            <t t-if="o.appointment_ids">
+                                <h2>Appointment Details</h2>
+
+                                <table name="appointment"
+                                    class="table table-condensed"
+                                    style="width:100%; border:1px solid black;">
+
+                                    <thead>
+                                        <tr>
+                                            <th name="th_ref_appointment">
+                                                Appointment Reference
+                                            </th>
+                                            <th name="th_appointment_date">
+                                                Appointment Date
+                                            </th>
+                                            <th name="th_doctor">
+                                                Doctor
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <t t-foreach="o.appointment_ids"
+                                            t-as="appointment">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="appointment.ref_appointment" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="appointment.appointment_date" />
+                                                </td>
+                                                <td>
+                                                    <span t-field="appointment.doctor_id" />
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+
+                                </table>
+
+                                <p>
+                                    <strong>Total Appointments:</strong>
+                                    <span t-esc="len(o.appointment_ids)" />
+                                </p>
+                            </t>
+                        </div>
+
+                    </div>
+
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

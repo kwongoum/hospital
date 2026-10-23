@@ -59,12 +59,14 @@
       sequence="20"
    />
 
-
    <menuitem id="menu_appointment_root"
       name="Appointment Management"
       parent="menu_hospital_root"
       sequence="30" />
-
+   <menuitem id="menu_report_root"
+      name="Reports"
+      parent="menu_hospital_root"
+      sequence="40" />
 
    <menuitem id="menu_appointment_list"
       name="Appointments list"
@@ -78,5 +80,10 @@
       action="action_appointment_cancel_wizard"
       sequence="20" />
 
+   <menuitem id="menu_report_appointment"
+      name="Appointment Reportss"
+      parent="menu_report_root"
+      action="action_appointment_report_wizard"
+      sequence="30" />
 
 </odoo>
