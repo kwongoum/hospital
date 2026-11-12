@@ -9,5 +9,3 @@ class HospitalDoctor(models.Model):
     user_id = fields.Many2one("res.users", string="Odoo User", required=True)
     specialities = fields.Many2many("hospital.speciality", string="Specialities")
     email = fields.Char(string="Email")
-    
-   
